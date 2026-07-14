@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nightowl — Your terminal, but for humans</title>
-    <meta name="description" content="A terminal-based workflow tool for developers who ship at 3am.">
+    <title>Nightowl — probably the worst dev tool you'll ever love</title>
+    <meta name="description" content="A brutally honest terminal tool that admits it's still figuring things out.">
 
     <!-- 
     ═══════════════════════════════════════════════════════════════════
@@ -43,7 +43,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -53,19 +53,17 @@
         }
 
         :root {
-            --bg: #0A0908;
-            --bg-elevated: #131211;
-            --bg-terminal: #0F0E0D;
-            --border: #1F1D1A;
-            --border-hi: #2E2A25;
-            --text: #F2F4F3;
-            --text-dim: #A39D95;
-            --text-muted: #6B6560;
-            --amber: #F4A261;
-            --amber-hot: #F7B267;
-            --amber-dim: #C77D3F;
-            --error: #E76F51;
-            --ok: #8FBC8F;
+            --bg: #FFF9E6;
+            --bg-yellow: #FFE55C;
+            --bg-cream: #FFF3D0;
+            --ink: #1A1A1A;
+            --ink-soft: #3D3D3D;
+            --ink-fade: #7A7A6E;
+            --accent: #FF4500;
+            --accent-hot: #FF6B35;
+            --purple: #6B4EE6;
+            --green: #2D7A3E;
+            --border: #1A1A1A;
         }
 
         html {
@@ -75,96 +73,78 @@
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg);
-            color: var(--text);
+            color: var(--ink);
             line-height: 1.6;
             font-size: 16px;
             overflow-x: hidden;
         }
 
-        /* Subtle scanline effect — CRT vibes without being cheesy */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(244, 162, 97, 0.015) 2px,
-                rgba(244, 162, 97, 0.015) 4px
-            );
-            pointer-events: none;
-            z-index: 100;
-        }
-
         /* ────────────────────────────────────────────────────────
-           NAV
+           NAV — deliberately rough
            ──────────────────────────────────────────────────────── */
 
         nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 40px;
-            background: rgba(10, 9, 8, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border);
-            z-index: 50;
+            padding: 20px 32px;
+            border-bottom: 3px solid var(--ink);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
         .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 15px;
-            color: var(--text);
-            letter-spacing: -0.02em;
+            font-family: 'Instrument Serif', serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--ink);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
+            letter-spacing: -0.02em;
         }
 
-        .logo-mark {
-            color: var(--amber);
+        .logo em {
+            font-style: italic;
+            color: var(--accent);
         }
 
-        .nav-links {
+        .nav-right {
             display: flex;
-            gap: 32px;
+            align-items: center;
+            gap: 24px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
         }
 
-        .nav-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            transition: color 0.15s;
+        .nav-right a {
+            color: var(--ink);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 4px;
         }
 
-        .nav-links a:hover {
-            color: var(--amber);
+        .nav-right a:hover {
+            color: var(--accent);
         }
 
-        .nav-cta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: var(--bg);
-            background: var(--amber);
-            padding: 8px 16px;
-            border-radius: 4px;
+        .nav-right a.nav-cta {
+            background: var(--ink);
+            color: var(--bg-yellow);
+            padding: 10px 18px;
+            border: 2px solid var(--ink);
             text-decoration: none;
             font-weight: 600;
-            transition: background 0.15s;
+            transition: transform 0.15s;
+            box-shadow: 4px 4px 0 var(--accent);
         }
 
-        .nav-cta:hover {
-            background: var(--amber-hot);
+        .nav-right a.nav-cta:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--accent);
+            color: var(--bg-yellow);
         }
 
         /* ────────────────────────────────────────────────────────
@@ -172,163 +152,180 @@
            ──────────────────────────────────────────────────────── */
 
         .hero {
-            padding: 160px 40px 100px;
+            padding: 100px 32px 80px;
             max-width: 1200px;
             margin: 0 auto;
+            position: relative;
         }
 
-        .prompt {
+        .eyebrow {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: var(--amber);
+            font-size: 12px;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             margin-bottom: 24px;
-            letter-spacing: 0.02em;
-        }
-
-        .prompt::before {
-            content: '$ ';
-            color: var(--amber-dim);
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--ink);
+            color: var(--bg-yellow);
         }
 
         .hero h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(48px, 8vw, 96px);
-            font-weight: 500;
-            line-height: 0.95;
-            letter-spacing: -0.04em;
-            margin-bottom: 32px;
-            max-width: 900px;
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(56px, 10vw, 140px);
+            font-weight: 400;
+            line-height: 0.92;
+            letter-spacing: -0.03em;
+            margin-bottom: 40px;
+            max-width: 1000px;
         }
 
-        .hero h1 .accent {
-            color: var(--amber);
+        .hero h1 em {
             font-style: italic;
-            font-weight: 400;
+            color: var(--accent);
+        }
+
+        .hero h1 .strike {
+            text-decoration: line-through;
+            text-decoration-thickness: 4px;
+            text-decoration-color: var(--accent);
+            color: var(--ink-fade);
         }
 
         .hero-sub {
-            font-size: 20px;
-            color: var(--text-dim);
+            font-size: 22px;
+            color: var(--ink-soft);
             max-width: 640px;
             margin-bottom: 48px;
-            line-height: 1.5;
+            line-height: 1.4;
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
         }
 
-        .install-cmd {
+        .install-box {
+            background: var(--ink);
+            color: var(--bg-yellow);
+            padding: 18px 24px;
             font-family: 'JetBrains Mono', monospace;
-            background: var(--bg-terminal);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 16px 20px;
+            font-size: 14px;
             display: inline-flex;
             align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: var(--text);
-            margin-bottom: 16px;
+            gap: 16px;
+            margin-bottom: 12px;
+            border: 2px solid var(--ink);
+            box-shadow: 6px 6px 0 var(--accent);
         }
 
-        .install-cmd .cmd-prompt {
-            color: var(--amber-dim);
+        .install-box .prompt-char {
+            color: var(--accent-hot);
         }
 
-        .install-cmd .copy {
-            color: var(--text-muted);
-            border-left: 1px solid var(--border);
-            padding-left: 12px;
-            margin-left: 8px;
+        .install-box .copy-btn {
+            color: var(--bg-cream);
+            border-left: 1px solid var(--ink-fade);
+            padding-left: 16px;
             font-size: 12px;
             cursor: pointer;
             user-select: none;
         }
 
-        .install-cmd .copy:hover {
-            color: var(--amber);
+        .install-box .copy-btn:hover {
+            color: var(--accent-hot);
         }
 
-        .hero-meta {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 8px;
+        .hero-note {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--ink-fade);
         }
 
         /* ────────────────────────────────────────────────────────
-           TERMINAL PREVIEW
+           SIGNATURE ELEMENT: honesty stamps
            ──────────────────────────────────────────────────────── */
 
-        .terminal-preview {
-            max-width: 1200px;
-            margin: 0 auto 120px;
-            padding: 0 40px;
+        .stamp {
+            display: inline-block;
+            transform: rotate(-3deg);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px 12px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: var(--bg);
         }
 
-        .terminal {
-            background: var(--bg-terminal);
-            border: 1px solid var(--border-hi);
-            border-radius: 8px;
+        .stamp.purple {
+            border-color: var(--purple);
+            color: var(--purple);
+            transform: rotate(2deg);
+        }
+
+        /* ────────────────────────────────────────────────────────
+           TERMINAL BUT MESSY
+           ──────────────────────────────────────────────────────── */
+
+        .terminal-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 32px;
+        }
+
+        .terminal-frame {
+            background: var(--ink);
+            border: 3px solid var(--ink);
+            box-shadow: 10px 10px 0 var(--accent);
             overflow: hidden;
-            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.5),
-                        0 0 0 1px rgba(244, 162, 97, 0.05);
         }
 
         .terminal-bar {
-            background: var(--bg-elevated);
-            padding: 12px 16px;
+            background: var(--bg-yellow);
+            padding: 12px 18px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--border);
+            gap: 8px;
+            border-bottom: 3px solid var(--ink);
         }
 
         .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--border-hi);
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--ink);
+            background: var(--ink);
         }
 
         .terminal-title {
             margin-left: 16px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            color: var(--text-muted);
+            color: var(--ink);
+            font-weight: 700;
         }
 
         .terminal-body {
-            padding: 24px;
+            padding: 28px 24px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            line-height: 1.7;
-            min-height: 320px;
+            font-size: 13.5px;
+            line-height: 1.8;
+            color: var(--bg-cream);
         }
 
-        .term-line {
-            color: var(--text);
-            margin-bottom: 4px;
-        }
+        .t-line { color: var(--bg-cream); }
+        .t-dim { color: var(--ink-fade); }
+        .t-error { color: var(--accent-hot); font-weight: 500; }
+        .t-ok { color: #7FD683; }
+        .t-yellow { color: var(--bg-yellow); }
+        .t-prompt { color: var(--accent-hot); }
 
-        .term-line.dim {
-            color: var(--text-muted);
-        }
-
-        .term-line.amber {
-            color: var(--amber);
-        }
-
-        .term-line.ok {
-            color: var(--ok);
-        }
-
-        .term-prompt {
-            color: var(--amber-dim);
-        }
-
-        .term-cursor {
+        .t-cursor {
             display: inline-block;
-            width: 8px;
+            width: 9px;
             height: 15px;
-            background: var(--amber);
+            background: var(--bg-yellow);
             vertical-align: middle;
             margin-left: 2px;
             animation: blink 1s step-end infinite;
@@ -344,242 +341,350 @@
            ──────────────────────────────────────────────────────── */
 
         section {
-            padding: 80px 40px;
+            padding: 80px 32px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .section-eyebrow {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--amber);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-bottom: 16px;
+        .section-h {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(44px, 7vw, 88px);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            max-width: 900px;
         }
 
-        .section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(32px, 5vw, 52px);
-            font-weight: 500;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-            margin-bottom: 20px;
-            max-width: 700px;
+        .section-h em {
+            font-style: italic;
+            color: var(--accent);
         }
 
         .section-desc {
-            font-size: 18px;
-            color: var(--text-dim);
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 20px;
+            color: var(--ink-soft);
             max-width: 640px;
-            margin-bottom: 64px;
+            margin-bottom: 60px;
         }
 
         /* ────────────────────────────────────────────────────────
-           FEATURES GRID
+           FEATURES — brutally honest
            ──────────────────────────────────────────────────────── */
 
-        .features-grid {
+        .features {
+            border-top: 3px solid var(--ink);
+        }
+
+        .feature-row {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
+            grid-template-columns: 100px 1fr 1fr auto;
+            gap: 40px;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--ink);
+            align-items: baseline;
         }
 
-        .feature {
-            padding: 32px;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-
-        .feature:hover {
-            border-color: var(--amber-dim);
-            transform: translateY(-2px);
+        .feature-row:last-child {
+            border-bottom: none;
         }
 
         .feature-num {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--amber);
-            margin-bottom: 16px;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 700;
             letter-spacing: 0.05em;
         }
 
-        .feature h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 22px;
-            font-weight: 500;
-            margin-bottom: 12px;
+        .feature-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 40px;
+            line-height: 1;
             letter-spacing: -0.02em;
         }
 
-        .feature p {
-            color: var(--text-dim);
+        .feature-name em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .feature-desc {
             font-size: 15px;
+            color: var(--ink-soft);
             line-height: 1.55;
         }
 
-        .feature-code {
+        .feature-status {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: var(--amber);
-            background: var(--bg-terminal);
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-top: 16px;
-            display: inline-block;
-            border: 1px solid var(--border);
+            font-size: 11px;
+            padding: 4px 10px;
+            border: 2px solid var(--ink);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        .status-works {
+            background: var(--green);
+            color: var(--bg-yellow);
+        }
+
+        .status-buggy {
+            background: var(--bg-yellow);
+            color: var(--ink);
+        }
+
+        .status-broken {
+            background: var(--accent);
+            color: var(--bg-yellow);
         }
 
         /* ────────────────────────────────────────────────────────
-           WHY SECTION
+           TESTIMONIALS — but they're funny/honest
            ──────────────────────────────────────────────────────── */
 
-        .why-section {
-            padding: 120px 40px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            margin: 80px auto 0;
+        .testimonials {
+            background: var(--ink);
+            color: var(--bg-cream);
+            padding: 100px 32px;
+            margin: 80px -32px;
         }
 
-        .why-content {
-            max-width: 800px;
+        .testimonials .inner {
+            max-width: 1200px;
             margin: 0 auto;
-            text-align: center;
         }
 
-        .why-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(36px, 6vw, 64px);
-            font-weight: 400;
-            line-height: 1.15;
-            letter-spacing: -0.03em;
-            margin-bottom: 24px;
+        .testimonials .eyebrow {
+            background: var(--bg-yellow);
+            color: var(--ink);
         }
 
-        .why-title em {
-            color: var(--amber);
+        .testimonials .section-h {
+            color: var(--bg-yellow);
+        }
+
+        .testimonials .section-h em {
+            color: var(--accent-hot);
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .quote {
+            padding: 32px;
+            background: var(--bg-yellow);
+            color: var(--ink);
+            border: 3px solid var(--bg-yellow);
+            position: relative;
+        }
+
+        .quote:nth-child(2) {
+            transform: rotate(1.5deg);
+            background: var(--bg-cream);
+            border-color: var(--bg-cream);
+        }
+
+        .quote:nth-child(3) {
+            transform: rotate(-0.8deg);
+        }
+
+        .quote-text {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            line-height: 1.25;
+            margin-bottom: 20px;
+        }
+
+        .quote-text em {
             font-style: italic;
         }
 
-        .why-quote {
+        .quote-author {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 40px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--ink-soft);
+        }
+
+        .quote-rating {
+            font-size: 16px;
+            margin-bottom: 12px;
+            letter-spacing: 4px;
         }
 
         /* ────────────────────────────────────────────────────────
-           STATUS WIDGET
+           STATUS PAGE (embedded)
            ──────────────────────────────────────────────────────── */
 
-        .status-section {
-            padding: 80px 40px;
+        .status-wrap {
+            background: var(--bg-cream);
+            padding: 80px 32px;
+            margin: 0 -32px;
+            border-top: 3px solid var(--ink);
+            border-bottom: 3px solid var(--ink);
+        }
+
+        .status-inner {
             max-width: 900px;
             margin: 0 auto;
         }
 
         .status-widget {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border);
-            border-radius: 8px;
+            background: var(--bg);
+            border: 3px solid var(--ink);
             padding: 32px;
             font-family: 'JetBrains Mono', monospace;
+            box-shadow: 8px 8px 0 var(--purple);
         }
 
-        .status-header {
+        .status-widget-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
+            padding-bottom: 16px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--ink);
             font-size: 13px;
         }
 
-        .status-header .label {
-            color: var(--text-muted);
+        .status-widget-header .label {
+            color: var(--ink-fade);
         }
 
-        .status-header .env {
-            color: var(--amber);
-            padding: 4px 10px;
-            background: rgba(244, 162, 97, 0.1);
-            border-radius: 3px;
+        .status-widget-header .env {
+            background: var(--accent);
+            color: var(--bg-yellow);
+            padding: 3px 10px;
+            font-weight: 700;
         }
 
-        .status-row {
+        .status-widget-row {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 13px;
+            padding: 14px 0;
+            border-bottom: 1px dashed var(--ink);
+            font-size: 13.5px;
         }
 
-        .status-row:last-child {
+        .status-widget-row:last-child {
             border-bottom: none;
         }
 
-        .status-row .service {
-            color: var(--text);
+        .status-widget-row .val.ok { color: var(--green); font-weight: 700; }
+        .status-widget-row .val.warn { color: var(--accent); font-weight: 700; }
+
+        /* ────────────────────────────────────────────────────────
+           MANIFESTO
+           ──────────────────────────────────────────────────────── */
+
+        .manifesto {
+            text-align: center;
+            padding: 140px 32px;
         }
 
-        .status-row .value.ok {
-            color: var(--ok);
+        .manifesto h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 400;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            max-width: 900px;
+            margin: 0 auto 40px;
         }
 
-        .status-row .value.warn {
-            color: var(--amber);
+        .manifesto h2 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .manifesto .signature {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--ink-fade);
+            margin-top: 60px;
         }
 
         /* ────────────────────────────────────────────────────────
-           CTA + FOOTER
+           FINAL CTA
            ──────────────────────────────────────────────────────── */
 
         .final-cta {
-            padding: 120px 40px;
+            background: var(--bg-yellow);
+            padding: 120px 32px;
+            margin: 0 -32px;
+            border-top: 3px solid var(--ink);
+            border-bottom: 3px solid var(--ink);
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .final-cta h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(36px, 6vw, 56px);
-            font-weight: 500;
-            line-height: 1.05;
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 400;
+            line-height: 1;
             letter-spacing: -0.03em;
-            margin-bottom: 24px;
+            max-width: 800px;
+            margin: 0 auto 24px;
+        }
+
+        .final-cta h2 em {
+            font-style: italic;
+            color: var(--accent);
         }
 
         .final-cta p {
-            font-size: 18px;
-            color: var(--text-dim);
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 20px;
+            color: var(--ink-soft);
             margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .cta-btn {
+            display: inline-block;
+            background: var(--ink);
+            color: var(--bg-yellow);
+            padding: 18px 32px;
             font-family: 'JetBrains Mono', monospace;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--amber);
-            color: var(--bg);
-            padding: 14px 24px;
-            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: background 0.15s, transform 0.15s;
+            border: 3px solid var(--ink);
+            box-shadow: 8px 8px 0 var(--accent);
+            transition: transform 0.15s, box-shadow 0.15s;
         }
 
         .cta-btn:hover {
-            background: var(--amber-hot);
-            transform: translateY(-1px);
+            transform: translate(-3px, -3px);
+            box-shadow: 11px 11px 0 var(--accent);
         }
 
+        .cta-note {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--ink-fade);
+            margin-top: 24px;
+        }
+
+        /* ────────────────────────────────────────────────────────
+           FOOTER
+           ──────────────────────────────────────────────────────── */
+
         footer {
-            border-top: 1px solid var(--border);
-            padding: 40px;
+            padding: 40px 32px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -587,45 +692,45 @@
         .footer-content {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             flex-wrap: wrap;
             gap: 20px;
         }
 
-        .footer-copyright {
+        .footer-copy {
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
-            color: var(--text-muted);
+            color: var(--ink-fade);
         }
 
         .footer-links {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
         }
 
         .footer-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.15s;
+            color: var(--ink);
+            text-decoration: underline;
+            text-underline-offset: 4px;
         }
 
         .footer-links a:hover {
-            color: var(--amber);
+            color: var(--accent);
         }
 
-        /* Made-in tag as signature detail */
         .made-in {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 8px;
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: var(--ink-fade);
             text-align: center;
+            margin-top: 30px;
         }
 
-        .made-in .heart {
-            color: var(--amber);
+        .made-in span {
+            color: var(--accent);
         }
 
         /* ────────────────────────────────────────────────────────
@@ -633,33 +738,35 @@
            ──────────────────────────────────────────────────────── */
 
         @media (max-width: 768px) {
-            nav {
-                padding: 16px 20px;
-            }
-            .nav-links {
-                display: none;
-            }
-            .hero {
-                padding: 120px 20px 60px;
-            }
-            .terminal-preview,
-            section,
-            .final-cta,
-            footer {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-            .features-grid {
+            nav { padding: 16px 20px; }
+            .logo { font-size: 26px; }
+            .nav-right { gap: 16px; font-size: 12px; }
+            .nav-right a:not(.nav-cta) { display: none; }
+            
+            .hero { padding: 60px 20px 50px; }
+            .terminal-section, section, footer { padding-left: 20px; padding-right: 20px; }
+            .testimonials, .status-wrap, .final-cta { margin-left: -20px; margin-right: -20px; padding-left: 20px; padding-right: 20px; }
+            
+            .install-box { flex-wrap: wrap; font-size: 12px; padding: 14px 18px; }
+            
+            .feature-row { 
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 12px;
+                padding: 28px 0;
             }
-            .feature {
-                padding: 24px;
+            .feature-name { font-size: 32px; }
+            
+            .quotes-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
             }
-            .terminal-body {
-                font-size: 12px;
-                padding: 16px;
-            }
+            
+            .terminal-body { font-size: 12px; padding: 20px 16px; }
+        }
+
+        /* Little jokes: mouse cursor easter eggs in specific spots */
+        .stamp:hover {
+            cursor: help;
         }
     </style>
 </head>
@@ -672,174 +779,246 @@
 
 <nav>
     <div class="logo">
-        <span class="logo-mark">◆</span> nightowl
+        n<em>i</em>ghtowl
     </div>
-    <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#why">Philosophy</a>
+    <div class="nav-right">
+        <a href="#truth">The Truth</a>
+        <a href="#reviews">Reviews</a>
         <a href="#status">Status</a>
-        <a href="https://github.com/mystery-dev-kw">GitHub</a>
+        <a href="#cta" class="nav-cta">Sign up (please)</a>
     </div>
-    <a href="#cta" class="nav-cta">Get early access</a>
 </nav>
 
 <div class="hero">
-    <div class="prompt">nightowl --version</div>
-    <h1>Your terminal,<br>but for <span class="accent">humans.</span></h1>
+    <span class="eyebrow">now in beta · barely</span>
+    <h1>
+        Probably the <span class="strike">best</span> <em>worst</em><br>
+        dev tool you'll ever love.
+    </h1>
     <p class="hero-sub">
-        A quiet, opinionated workflow tool for developers who ship at 3am.
-        Nightowl handles the boring stuff so you can focus on what you're actually building.
+        Nightowl is a terminal workflow tool. It works. Mostly. When our servers are up. Which is Tuesday–Thursday.
     </p>
-    <div class="install-cmd">
-        <span class="cmd-prompt">$</span>
+    <div class="install-box">
+        <span class="prompt-char">$</span>
         <span>curl -sSL nightowl.sh | sh</span>
-        <span class="copy" onclick="alert('Coming soon — join the waitlist below.')">copy</span>
+        <span class="copy-btn" onclick="alert('nice try — the install script doesn\'t exist yet 😅')">click to copy →</span>
     </div>
-    <div class="hero-meta">
-        macOS · Linux · Windows (WSL) — Currently in private beta
-    </div>
+    <p class="hero-note">
+        <span class="stamp">honest since day 1</span>
+        &nbsp;&nbsp;<span class="stamp purple">still figuring it out</span>
+    </p>
 </div>
 
-<div class="terminal-preview">
-    <div class="terminal">
+<div class="terminal-section">
+    <div class="terminal-frame">
         <div class="terminal-bar">
             <div class="terminal-dot"></div>
             <div class="terminal-dot"></div>
             <div class="terminal-dot"></div>
-            <div class="terminal-title">~/projects/website — nightowl</div>
+            <div class="terminal-title">~/projects/that-one-thing — nightowl</div>
         </div>
         <div class="terminal-body">
-            <div class="term-line"><span class="term-prompt">→</span> nightowl init</div>
-            <div class="term-line dim">Scanning project structure...</div>
-            <div class="term-line dim">Detected: Next.js 14, TypeScript, Tailwind</div>
-            <div class="term-line ok">✓ Configuration generated</div>
-            <div class="term-line ok">✓ Git hooks installed</div>
-            <div class="term-line ok">✓ Dev environment ready</div>
-            <div class="term-line">&nbsp;</div>
-            <div class="term-line"><span class="term-prompt">→</span> nightowl watch</div>
-            <div class="term-line amber">◆ Watching 47 files across 3 workspaces</div>
-            <div class="term-line dim">→ src/app/page.tsx modified (243ms)</div>
-            <div class="term-line dim">→ Type checking passed</div>
-            <div class="term-line dim">→ Formatted 2 files</div>
-            <div class="term-line ok">✓ All checks green</div>
-            <div class="term-line">&nbsp;</div>
-            <div class="term-line"><span class="term-prompt">→</span> <span class="term-cursor"></span></div>
+            <div class="t-line"><span class="t-prompt">→</span> nightowl init</div>
+            <div class="t-dim">Scanning project structure...</div>
+            <div class="t-dim">Detected: Next.js, TypeScript, and existential dread</div>
+            <div class="t-ok">✓ Configuration generated</div>
+            <div class="t-ok">✓ Git hooks installed</div>
+            <div class="t-error">✗ Failed to detect coffee maker on network</div>
+            <div class="t-yellow">⚠  Warning: this project has 47 TODO comments</div>
+            <div class="t-yellow">⚠  Warning: half of them are from 2 years ago</div>
+            <div class="t-line">&nbsp;</div>
+            <div class="t-line"><span class="t-prompt">→</span> nightowl watch</div>
+            <div class="t-line"><span class="t-yellow">◆</span> Watching your files (and your life choices)</div>
+            <div class="t-dim">→ src/app/page.tsx modified</div>
+            <div class="t-dim">→ Type checking...</div>
+            <div class="t-error">✗ 3 errors found. Yes, in the file you just saved.</div>
+            <div class="t-error">✗ No, it's not our fault this time.</div>
+            <div class="t-line">&nbsp;</div>
+            <div class="t-line"><span class="t-prompt">→</span> nightowl help me</div>
+            <div class="t-yellow">Have you tried turning it off and on again?</div>
+            <div class="t-line">&nbsp;</div>
+            <div class="t-line"><span class="t-prompt">→</span> <span class="t-cursor"></span></div>
         </div>
     </div>
 </div>
 
-<section id="features">
-    <div class="section-eyebrow">// what it does</div>
-    <h2 class="section-title">Four things, done well.</h2>
+<section class="features" id="truth">
+    <span class="eyebrow">the features · and the truth</span>
+    <h2 class="section-h">What it <em>actually</em> does.</h2>
     <p class="section-desc">
-        We're not building another IDE. Nightowl is the layer between you and the mess of tools you already use.
+        We could lie to you like every other landing page. We won't. Here's the current state of things:
     </p>
 
-    <div class="features-grid">
-        <div class="feature">
-            <div class="feature-num">01 / watch</div>
-            <h3>Smart file watching</h3>
-            <p>Detects what changed, decides what to run. No config file bloat. If your project has a package.json, Nightowl already knows what to do.</p>
-            <div class="feature-code">nightowl watch --smart</div>
+    <div class="feature-row">
+        <div class="feature-num">01 / watch</div>
+        <div class="feature-name">File <em>watching</em></div>
+        <div class="feature-desc">
+            Watches your files. Tells you what changed. Sometimes tells you before you actually save. Time is a construct.
         </div>
-        <div class="feature">
-            <div class="feature-num">02 / sync</div>
-            <h3>Cross-device sessions</h3>
-            <p>Start on your laptop at the office, continue on your desktop at home. Your terminal state travels with you.</p>
-            <div class="feature-code">nightowl sync --to=home</div>
+        <div class="feature-status status-works">✓ works</div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-num">02 / sync</div>
+        <div class="feature-name">Device <em>sync</em></div>
+        <div class="feature-desc">
+            Sync between machines. In theory. In practice, it works if you're on the same wifi and Mercury isn't in retrograde.
         </div>
-        <div class="feature">
-            <div class="feature-num">03 / recall</div>
-            <h3>Command history that thinks</h3>
-            <p>Search across every command you've ever run, filtered by project, by day, by outcome. "What did I type last Tuesday?" is a real question now.</p>
-            <div class="feature-code">nightowl recall "docker"</div>
+        <div class="feature-status status-buggy">~ mostly</div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-num">03 / recall</div>
+        <div class="feature-name">Command <em>history</em></div>
+        <div class="feature-desc">
+            Search every command you've ever typed. Including that <code>rm -rf</code> you regret. We remember. Forever.
         </div>
-        <div class="feature">
-            <div class="feature-num">04 / share</div>
-            <h3>Shareable sessions</h3>
-            <p>Debug with a teammate without screen-sharing. Send them a terminal snapshot they can inspect, replay, and comment on.</p>
-            <div class="feature-code">nightowl share --last</div>
+        <div class="feature-status status-works">✓ works</div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-num">04 / share</div>
+        <div class="feature-name">Session <em>sharing</em></div>
+        <div class="feature-desc">
+            Share your terminal with a friend. Neither of you will remember why after 5 minutes. This feature is buggy.
         </div>
+        <div class="feature-status status-broken">✗ broken</div>
+    </div>
+
+    <div class="feature-row">
+        <div class="feature-num">05 / soon</div>
+        <div class="feature-name">AI, obviously</div>
+        <div class="feature-desc">
+            Every dev tool has AI now. So do we. Kind of. It suggests you take breaks. That's the whole feature.
+        </div>
+        <div class="feature-status status-buggy">planned</div>
     </div>
 </section>
 
-<div class="why-section" id="why">
-    <div class="why-content">
-        <div class="section-eyebrow">// why we're building this</div>
-        <h2 class="why-title">
-            The terminal is <em>the</em> most powerful tool<br>we have, and we've barely touched it since 1978.
-        </h2>
-        <p class="why-quote">
-            — from the Nightowl manifesto, unpublished draft
-        </p>
+<div class="testimonials" id="reviews">
+    <div class="inner">
+        <span class="eyebrow">what 4 people said</span>
+        <h2 class="section-h">Reviews from<br>our <em>tiny</em> user base.</h2>
+        
+        <div class="quotes-grid">
+            <div class="quote">
+                <div class="quote-rating">★★★★★</div>
+                <div class="quote-text">
+                    "I don't understand what this <em>does</em>, but I bought the sticker. It's on my laptop now."
+                </div>
+                <div class="quote-author">— nora, professional developer</div>
+            </div>
+            <div class="quote">
+                <div class="quote-rating">★★★☆☆</div>
+                <div class="quote-text">
+                    "The terminal is <em>fine</em>. My son made me install it. He seems happy."
+                </div>
+                <div class="quote-author">— my mom</div>
+            </div>
+            <div class="quote">
+                <div class="quote-rating">★★★★★</div>
+                <div class="quote-text">
+                    "It crashed once but the error message made me <em>laugh</em>. 10/10 would install again."
+                </div>
+                <div class="quote-author">— rasha, staff engineer</div>
+            </div>
+        </div>
     </div>
 </div>
 
-<section class="status-section" id="status">
-    <div class="section-eyebrow">// system status</div>
-    <h2 class="section-title" style="font-size: 32px;">Currently online.</h2>
+<div class="status-wrap" id="status">
+    <div class="status-inner">
+        <span class="eyebrow">live from our servers</span>
+        <h2 class="section-h" style="font-size: 56px;">Currently online.<br>Mostly.</h2>
 
-    <div class="status-widget">
-        <div class="status-header">
-            <span class="label">Live services</span>
-            <span class="env">staging</span>
-        </div>
-        <div class="status-row">
-            <span class="service">→ API Gateway</span>
-            <span class="value ok">operational · 99.98%</span>
-        </div>
-        <div class="status-row">
-            <span class="service">→ Sync engine</span>
-            <span class="value ok">operational · 100%</span>
-        </div>
-        <div class="status-row">
-            <span class="service">→ Auth service</span>
-            <span class="value ok">operational · 99.94%</span>
-        </div>
-        <div class="status-row">
-            <span class="service">→ Command relay</span>
-            <span class="value warn">degraded · investigating</span>
-        </div>
-        <div class="status-row">
-            <span class="service">→ Web dashboard</span>
-            <span class="value ok">operational · 99.99%</span>
+        <div class="status-widget">
+            <div class="status-widget-header">
+                <span class="label">// live services</span>
+                <span class="env">staging</span>
+            </div>
+            <div class="status-widget-row">
+                <span>→ API Gateway</span>
+                <span class="val ok">operational · 99.98%</span>
+            </div>
+            <div class="status-widget-row">
+                <span>→ Sync engine</span>
+                <span class="val ok">operational · 100%</span>
+            </div>
+            <div class="status-widget-row">
+                <span>→ Auth service</span>
+                <span class="val ok">operational · 99.94%</span>
+            </div>
+            <div class="status-widget-row">
+                <span>→ Command relay</span>
+                <span class="val warn">degraded · Ahmed is on it</span>
+            </div>
+            <div class="status-widget-row">
+                <span>→ Coffee machine</span>
+                <span class="val warn">critical · out of beans</span>
+            </div>
+            <div class="status-widget-row">
+                <span>→ Team morale</span>
+                <span class="val ok">operational · 87%</span>
+            </div>
         </div>
     </div>
-</section>
+</div>
+
+<div class="manifesto">
+    <h2>
+        The terminal is <em>the</em><br>
+        most powerful tool<br>
+        we have. And we've<br>
+        <em>barely</em> touched it<br>
+        since 1978.
+    </h2>
+    <p class="signature">
+        — from the Nightowl manifesto,<br>
+        which is unpublished, because we're<br>
+        still arguing about the third paragraph.
+    </p>
+</div>
 
 <div class="final-cta" id="cta">
-    <h2>Beta invites go out weekly.</h2>
-    <p>500 developers already on the list. Grab your spot before we open pricing.</p>
-    <a href="#" class="cta-btn" onclick="event.preventDefault(); alert('Beta signup form coming next week!'); return false;">
-        Request early access →
+    <h2>Sign up. <em>Please.</em></h2>
+    <p>
+        We have 4 signups. One of them is my mom.<br>
+        Be signup number 5. Be a hero.
+    </p>
+    <a href="#" class="cta-btn" onclick="event.preventDefault(); alert('the signup form doesn\'t exist yet either. we\'ll let you know.'); return false;">
+        Yes, sign me up →
     </a>
+    <p class="cta-note">
+        no credit card required · no product required · just vibes
+    </p>
 </div>
 
 <footer>
     <div class="footer-content">
-        <div>
-            <div class="footer-copyright">
-                © 2025 Nightowl Labs · Kuwait
-            </div>
+        <div class="footer-copy">
+            © 2025 Nightowl Labs · Kuwait · Built by two developers and a coffee machine
         </div>
         <div class="footer-links">
-            <a href="#">Docs</a>
+            <a href="#">Docs (soon)</a>
             <a href="#">Changelog</a>
-            <a href="#">Blog</a>
+            <a href="#">Blog (empty)</a>
             <a href="#">@nightowl_dev</a>
         </div>
     </div>
     <p class="made-in">
-        Built at 3am in Kuwait City <span class="heart">◆</span> by two humans who love the terminal
+        Built at 3am in Kuwait City <span>◆</span> because we couldn't sleep
     </p>
 </footer>
 
 <!--
-    Terminal-inspired design system.
-    If you like the aesthetic and want to work with us, we're hiring.
-    (There's no application form yet. Just email us.)
+    A note from the design team:
     
-    P.S. — Ahmed still hasn't cleaned up the internal notes above. 🙃
+    If you like the aesthetic and want to work with us, we're hiring.
+    Well — we're not hiring exactly. We can't afford anyone.
+    But if you want to help for free, we'd love that.
+    
+    P.S. — Ahmed still hasn't cleaned up the internal notes in the <head>. 🙃
+    P.P.S. — Yousef put this note here to shame him publicly. Hi Ahmed.
 -->
 
 </body>
